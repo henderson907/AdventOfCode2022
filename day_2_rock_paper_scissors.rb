@@ -2536,7 +2536,6 @@ p total
 
 ###### Part 2 ######
 
-
 correct_scores = []
 
 # looping through the rounds, and shuttling the respective score into a new array
