@@ -299,22 +299,45 @@ PpMgDMDnsWSnjBQnrjbn
 LFcVVGChCFdhdVFZVpVCdVbvQbRrbvBBbBjQSJZrrJrR
 FNwGNCCFHcVTHcFdHHHTDzMzfsgzwpPWMmPflmtt"
 
+
+
+############# Part 1 + 2 ###############
+
+# Sorting the input into separate rucksacks
 rucksacks = puzzle_input.split("\n")
+
+# Function that takes an array of items (letters) and an empty array, and then gives each letter it's corresponding priority value
+# The -96 and -38 are to adjust for the fact we want [a-zA-Z] === [1-52], while the ord function has [A-Za-z] === [65-90, 97-122]
+def assigning_priorities(items_array, number_array)
+  items_array.each do |item|
+    case item
+    when /[a-z]/
+      number_array << item.ord - 96
+    when /[A-Z]/
+      number_array << item.ord - 38
+    end
+  end
+end
+
+
+############# Part 1 ###############
+
 compartments_1 = []
 compartments_2 = []
+misplaced_items = []
+item_values = []
+i = 0
 
+# Calculates the size of the rucksack and then puts the first compartment in one array and the
+# second compartment in another, so they have the same index
 rucksacks.each do |rucksack|
   compartment_size = rucksack.length / 2
-
   compartments_1 << rucksack.slice(0...compartment_size)
   compartments_2 << rucksack.slice(compartment_size...rucksack.length)
 end
 
-compartments_2[1]
-
-misplaced_items = []
-i = 0
-
+# Iterates through the array of first compartments and checks it against the second compartment of the same rucksack
+# When it finds a match for the letter, it shuttles it into an array and breaks the loop (we know that there is only 1 repeated item)
 compartments_1.each do |compartment|
   compartment.chars.uniq.each do |letter|
     if compartments_2[i].include?(letter)
@@ -325,15 +348,47 @@ compartments_1.each do |compartment|
   i = i + 1
 end
 
-item_values = []
+# Calling the previously described function
+assigning_priorities(misplaced_items, item_values)
 
-misplaced_items.each do |item|
-  case item
-  when /[a-z]/
-    item_values << item.ord - 96
-  when /[A-Z]/
-    item_values << item.ord - 38
-  end
+# Part 1: 1 rucksack, misplaced components
+# Answer: 8176
+p item_values.sum
+
+
+
+############# Part 2 ###############
+
+elf1 = []
+elf2 = []
+elf3 = []
+token_items = []
+token_values = []
+i = 0
+
+# Separating the groups up into elf 1, elf 2 and elf 3, all with the index corresponding to their group number (0, 1, 2, ..., 99)
+for i in 0..99 do
+  elf1 << rucksacks[3*i]
+  elf2 << rucksacks[3*i + 1]
+  elf3 << rucksacks[3*i + 2]
 end
 
-p item_values.sum
+# Iterating through the array of first elves and checks it against the second and third elves
+# When it finds a match for the letter across all 3 (hence the && operator), it shuttles it into an
+# array and breaks the loop (we know that there is only 1 authenticity token)
+elf1.each do |items|
+  items.chars.uniq.each do |letter|
+    if elf2[i].include?(letter) && elf3[i].include?(letter)
+      token_items << letter
+      break
+    end
+  end
+  i = i + 1
+end
+
+# Calls the previously described function
+assigning_priorities(token_items, token_values)
+
+# Part 2: Three elves in a group
+# Answer: 2689
+p token_values.sum
