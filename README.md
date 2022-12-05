@@ -2,7 +2,7 @@
 <p>Day 1: Calorie Counting ✅</p>
 <p>Day 2: Rock, Paper, Scissors ✅</p>
 <p>Day 3: Rucksack Reorganization ✅</p>
-<p>Day 4:</p>
+<p>Day 4: Camp Cleanup ✅</p>
 <p>Day 5:</p>
 <p>Day 6:</p>
 <p>Day 7:</p>
