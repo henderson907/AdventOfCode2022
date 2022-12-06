@@ -4,7 +4,7 @@
 <p>Day 3: Rucksack Reorganization ✅</p>
 <p>Day 4: Camp Cleanup ✅</p>
 <p>Day 5: Supply Stacks ✅</p>
-<p>Day 6:</p>
+<p>Day 6: Tuning Trouble ✅</p>
 <p>Day 7:</p>
 <p>Day 8:</p>
 <p>Day 9:</p>
