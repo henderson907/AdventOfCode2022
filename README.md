@@ -5,7 +5,7 @@
 <p>Day 4: Camp Cleanup ✅</p>
 <p>Day 5: Supply Stacks ✅</p>
 <p>Day 6: Tuning Trouble ✅</p>
-<p>Day 7:</p>
+<p>Day 7: No Space Left On Device ✅</p>
 <p>Day 8:</p>
 <p>Day 9:</p>
 <p>Day 10:</p>
