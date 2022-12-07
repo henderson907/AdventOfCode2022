@@ -1046,9 +1046,9 @@ $ ls
 
 instructions = puzzle_input.split("\n")
 instructions.delete_at(0)
-# create a method for each potential command
-# Use a hash to store the directory values
+
 @value = "/"
+@dir_hash = {}
 
 def cd(new_dir)
   @value << "#{new_dir}/"
@@ -1061,6 +1061,22 @@ def cd_back
   @value << "/"
 end
 
+def value_assignment(number)
+  if @dir_hash.include?(@value)
+    @dir_hash["#{@value}"] += number
+  else
+    @dir_hash["#{@value}"] = number
+  end
+
+  @dir_hash.each do |key, amount|
+    unless key == @value
+      if @value.include?("#{key}")
+        @dir_hash["#{key}"] += number
+      end
+    end
+  end
+end
+
 instructions.each do |instruction|
   if instruction.match?(/[$]\scd\s[.][.]/)
     cd_back
@@ -1068,6 +1084,20 @@ instructions.each do |instruction|
     instruct_array = instruction.split
     new_dir = instruct_array.pop
     cd(new_dir)
+  elsif instruction.match?(/\d+\s.+/)
+    instruct_array = instruction.split
+    number = instruct_array.first
+    value_assignment(number.to_i)
   end
-  p @value
 end
+
+@total = 0
+
+@dir_hash.each do |key, value|
+  if value <= 100000
+    @total += value
+  end
+end
+
+
+p @total
