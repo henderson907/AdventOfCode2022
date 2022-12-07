@@ -1044,16 +1044,20 @@ $ cd sdhqp
 $ ls
 95362 wsbpzmbq.hws"
 
+# Splitting the puzzle input into an array of instructions
 instructions = puzzle_input.split("\n")
 instructions.delete_at(0)
 
 @value = "/"
 @dir_hash = {}
+@total = 0
 
+# A method to keep track of the directory path we are in
 def cd(new_dir)
   @value << "#{new_dir}/"
 end
 
+# A method to move back in the directory path and keep track of where we are
 def cd_back
   new_value = @value.split("/")
   new_value.pop
@@ -1061,6 +1065,9 @@ def cd_back
   @value << "/"
 end
 
+# A method that looks to see if a hash key-value pair already exists for the working directory
+# If so it adds the value on, if not, it creates a pair with the value
+# The method then goes on to add the value to the previous directory paths
 def value_assignment(number)
   if @dir_hash.include?(@value)
     @dir_hash["#{@value}"] += number
@@ -1068,15 +1075,22 @@ def value_assignment(number)
     @dir_hash["#{@value}"] = number
   end
 
-  @dir_hash.each do |key, amount|
-    unless key == @value
-      if @value.include?("#{key}")
-        @dir_hash["#{key}"] += number
-      end
+  directory = @value
+
+  until directory == "/"
+    new_direct = directory.split("/")
+    new_direct.pop
+    directory = new_direct.join("/")
+    directory << "/"
+    if @dir_hash.include?(directory)
+      @dir_hash["#{directory}"] += number
+    else
+      @dir_hash["#{directory}"] = number
     end
   end
 end
 
+# Iterates through the instructions and uses pattern recognition and Regex to call the correct method
 instructions.each do |instruction|
   if instruction.match?(/[$]\scd\s[.][.]/)
     cd_back
@@ -1091,13 +1105,39 @@ instructions.each do |instruction|
   end
 end
 
-@total = 0
-
+# Looks through all the values in the hash and if they are smaller than 100000, adds it to the total
 @dir_hash.each do |key, value|
   if value <= 100000
     @total += value
   end
 end
 
-
+# Part 1: File size of directories < 100000
+# Answer: 1243729
 p @total
+
+
+
+
+############ Part 2 ##############
+
+# Calculates space needed for the update
+used_space = @dir_hash["/"]
+available_space = 70000000 - used_space
+space_required = 30000000 - available_space
+possible_dirs = []
+
+# Iterates through the hash and if the directory takes up more space than the size
+# needed for the update, it pushes it into the array
+@dir_hash.each do |key, value|
+  if value >= space_required
+    possible_dirs << value
+  end
+end
+
+# Finds the smallest directory that can be deleted
+dir_size = possible_dirs.min
+
+# Part 2: Smallest directory for deletion
+# Answer: 4443914
+p dir_size
