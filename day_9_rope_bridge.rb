@@ -2043,5 +2043,10 @@ def simulate(steps, length=2)
   return tail_positions.values.count(true)
 end
 
+# Part 1: 2 knots
+# Answer: 6494
 p simulate(input)
+
+# Part 2: 10 knots
+# Answer: 2691
 p simulate(input, 10)
