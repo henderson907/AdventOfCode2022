@@ -101,6 +101,12 @@ puzzle_input = "2333141132524022253514636334534242263620411640656661356124110110
 forest_rows = puzzle_input.split("\n")
 forest_columns = []
 
+distance_matrix = []
+
+99.times do
+  distance_matrix << Array.new(99) { |z| 0 }
+end
+
 for i in 1..99
   column = []
   forest_rows.each do |row|
@@ -219,3 +225,41 @@ p visible_trees
 
 
 ############## Part 2 ###############
+
+tallest = {}
+tallest_y = {}
+
+forest_rows.each_with_index do |row, index|
+  arr = row.split("")
+  top = arr.max
+  jndex = arr.find_index(top)
+  tallest["#{index}, #{jndex}"] = jndex * (98 - jndex)
+end
+
+forest_columns.each_with_index do |col, index|
+  arr = col.split("")
+  top = arr.max
+  jndex = arr.find_index(top)
+  tallest_y["#{jndex}, #{index}"] = jndex * (98 - jndex)
+end
+
+
+best_trees_x = tallest.keys
+best_trees_y = tallest_y.keys
+
+best_trees = []
+
+best_trees_x.each do |best_tree|
+  if best_trees_y.include?(best_tree)
+    best_trees << best_tree
+  end
+end
+
+
+scores = best_trees.map do |tree|
+  #p tree
+  tallest[tree] * tallest_y[tree]
+end
+
+
+p scores.max
