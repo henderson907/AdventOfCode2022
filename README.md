@@ -9,8 +9,8 @@
 <p>Day 8: Tree Top Tree House ☑️</p>
 <p>Day 9: Rope Bridge ☑️</p>
 <p>Day 10: Cathode-Ray Tube ☑️</p>
-<p>Day 11:</p>
-<p>Day 12:</p>
+<p>Day 11: Monkey In The Middle ✅</p>
+<p>Day 12: Hill Climbing Algorithm ☑️</p>
 <p>Day 13:</p>
 <p>Day 14:</p>
 <p>Day 15:</p>
