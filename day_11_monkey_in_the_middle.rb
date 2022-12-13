@@ -54,6 +54,8 @@ Test: divisible by 3
   If true: throw to monkey 4
   If false: throw to monkey 2"
 
+# Creating an initial hash with monkey values
+# Could have extracted the data but was easier to do it manually
 @monkey_hash = {monkey_0: [89, 84, 88, 78, 70],
                monkey_1: [76, 62, 61, 54, 69, 60, 85],
                monkey_2: [83, 89, 53],
@@ -64,6 +66,11 @@ Test: divisible by 3
                monkey_7: [91, 53, 96, 98, 68, 82]}
 
 @monkey_inspects = Array.new(8, 0)
+
+
+# Made functions for each chimp which carries out the steps on an inspection
+# These could be made into one function as there is repeated code but I couldn't be bothered to refactor
+# The commented out lines are for part 1
 
 def chimp_0(value)
   @monkey_inspects[0] += 1
@@ -153,6 +160,7 @@ def chimp_7(value)
   end
 end
 
+# Directs the value to the correct chimp
 def chimp_inspection(chimp_number, value)
   case chimp_number
   when "0"
@@ -175,6 +183,35 @@ def chimp_inspection(chimp_number, value)
 end
 
 
+################## Part 1 ##################
+
+# Iterates 20 times and takes each chimp, cycles through their values
+# Each value is then sent to be inspected
+# Once each value for the chimp has been inspected, the values are erased from the chimp
+20.times do
+  @monkey_hash.each do |key, value|
+    chimp_number = key.to_s.split("").pop
+    value.each do |number|
+      chimp_inspection(chimp_number, mod_number)
+    end
+    @monkey_hash[key] = []
+  end
+end
+
+top_two = @monkey_inspects.max(2)
+answer = top_two[0] * top_two[1]
+
+# Part 1: 20 iterations with /3 worry control
+# Asnwer: 55930
+p answer
+
+################## Part 2 ##################
+
+# Iterates 10000 times and takes each chimp, cycles through their values
+# The value is divided by the LCM of all the divisor tests to prevent overflow
+# As the divisor tests are primes, the LCM is all of them multiplied together
+# Each value is then sent to be inspected
+# Once each value for the chimp has been inspected, the values are erased from the chimp
 10000.times do
   @monkey_hash.each do |key, value|
     chimp_number = key.to_s.split("").pop
@@ -186,8 +223,9 @@ end
   end
 end
 
-
-
-p @monkey_inspects
 top_two = @monkey_inspects.max(2)
-p top_two[0] * top_two[1]
+answer = top_two[0] * top_two[1]
+
+# Part 2: 10000 iterations with lcm worry control to prevent overflow
+# Answer: 14636993466
+p answer
