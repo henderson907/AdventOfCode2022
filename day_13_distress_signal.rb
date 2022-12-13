@@ -504,6 +504,7 @@ p answer
 # we set the dividers to [2] and [6] as per the question
 dividers = [[2], [6]]
 
+# Had to get some help here to work out the order in which to put the commands
 packets = [nil] + input
                       .map { |i| i.gsub('[]', '[0]') }
                       .map { |i| i.split("\n") }
@@ -512,9 +513,11 @@ packets = [nil] + input
                       .concat(dividers)
                       .sort_by(&:flatten)
 
-puts dividers.map { |i| packets.index(i) }.reduce(:*)
-
-
+# Finds the index of each divider and multiplies them together
+left_index = packets.index([2])
+right_index = packets.index([6])
+answer = left_index * right_index
 
 # Part 2: Extra packet
 # Answer: 22713
+p answer
