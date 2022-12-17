@@ -157,8 +157,6 @@ row_max = values_1.max
 col_max = values_0.max
 col_min = values_0.min
 
-p col_min
-
 @matrix = Matrix.build(row_max + 2, col_max + 2) { |row, col| 0 }
 
 # 0 = space
@@ -218,7 +216,7 @@ rows.each do |row|
       elsif coord[1] < last_coord[1]
         # y < b - we must increase y until it matches with b
         x = coord[0]
-        y = coord[1] - 1
+        y = coord[1] + 1
 
         while y < last_coord[1]
           rock_int_coords << [x,y]
@@ -237,7 +235,7 @@ rows.each do |row|
 
       elsif coord[0] < last_coord[0]
         # x < a - we must increase x until it matches with a
-        x = coord[0] - 1
+        x = coord[0] + 1
         y = coord[1]
 
         while x < last_coord[0]
@@ -301,5 +299,3 @@ end
 
 # Must subtract one as the final sand drops into the abyss
 p counter - 1
-
-#p @matrix
