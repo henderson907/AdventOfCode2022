@@ -157,8 +157,9 @@ row_max = values_1.max
 col_max = values_0.max
 col_min = values_0.min
 
+p col_min
 
-@matrix = Matrix.build(row_max + 1, col_max + 1) { |row, col| 0 }
+@matrix = Matrix.build(row_max + 2, col_max + 2) { |row, col| 0 }
 
 # 0 = space
 # 1 = rock
@@ -253,7 +254,8 @@ rows.each do |row|
 
 end
 
-
+# Checks to see where the sand can fall, and if so, moves it there
+# Once the sand can no longer fall, it puts it into the matrix at it's current position
 def drop_sand
   can_move = true
   x = @starting_point[0]
@@ -276,7 +278,6 @@ def drop_sand
     end
   end
 
-  p "(#{x}, #{y})"
   @matrix[y, x] = 2
 end
 
@@ -289,5 +290,16 @@ end
 # If the position is taken, it will end the go and store the value of 2 in that position
 # We know that if the sand falls to a column greater than col_max(561) or less than col_min (469) then it falls to the abyss
 
-drop_sand
-drop_sand
+counter = 0
+
+# Checks that there has been no overflow into the abyss
+# If not, drops a sand
+while @matrix.row(162).zero?
+  drop_sand
+  counter += 1
+end
+
+# Must subtract one as the final sand drops into the abyss
+p counter - 1
+
+#p @matrix
