@@ -155,6 +155,8 @@ end
 
 row_max = values_1.max
 col_max = values_0.max
+col_min = values_0.min
+
 
 @matrix = Matrix.build(row_max + 1, col_max + 1) { |row, col| 0 }
 
@@ -185,6 +187,7 @@ def plot_coords(coord_array)
   end
 end
 
+# Iterates through the rows and takes the data to insert it into an array so the rocks are placed in the matrix
 rows.each do |row|
   # Each row represents one line of input aka a stone wall
   # Row looks like: ["528,137", "532,137"]
@@ -249,3 +252,42 @@ rows.each do |row|
   plot_coords(rock_int_coords)
 
 end
+
+
+def drop_sand
+  can_move = true
+  x = @starting_point[0]
+  y = @starting_point[1]
+
+  while can_move == true
+    if @matrix[y + 1, x] == 0
+      # Checks if the space directly below is free
+      y += 1
+    elsif @matrix[y + 1, x - 1] == 0
+      # Checks to see if the space below and to the left is free
+      y += 1
+      x -= 1
+    elsif @matrix[y + 1, x + 1] == 0
+      # Checks to see if the space below and to the right is free
+      y += 1
+      x += 1
+    else
+      can_move = false
+    end
+  end
+
+  p "(#{x}, #{y})"
+  @matrix[y, x] = 2
+end
+
+@starting_point = [500, 000]
+
+# Create a method that "drops" a sand into the map starting at [500, 000]
+# Will try to move a sand down (a.k.a. increase y by 1)
+# If the position is taken, it will try to increase y by 1 and decrease x by 1
+# If the position is taken, it will try to increase y by 1 and increase x by 1
+# If the position is taken, it will end the go and store the value of 2 in that position
+# We know that if the sand falls to a column greater than col_max(561) or less than col_min (469) then it falls to the abyss
+
+drop_sand
+drop_sand
