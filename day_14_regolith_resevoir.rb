@@ -249,53 +249,78 @@ rows.each do |row|
 
   # rock_int_coords looks like [[528, 137], [529, 137], [530, 137], [531, 137], [532, 137]]
   plot_coords(rock_int_coords)
-
 end
+
+# This is used later for part 2. It is our matrix with an additional 500 columns
+# attached to it's right as padding to simulate an infinite floor
+new_matrix = Matrix.build(163, 500) { |row, col| 0}
+@ultra_matrix = @matrix.hstack(new_matrix)
+
 
 # Checks to see where the sand can fall, and if so, moves it there
 # Once the sand can no longer fall, it puts it into the matrix at it's current position
-def drop_sand
+def drop_sand(matrix)
   can_move = true
   x = @starting_point[0]
   y = @starting_point[1]
 
   while can_move == true
-    if @matrix[y + 1, x] == 0
+    if matrix[y + 1, x] == 0
       # Checks if the space directly below is free
       y += 1
-    elsif @matrix[y + 1, x - 1] == 0
+    elsif matrix[y + 1, x - 1] == 0
       # Checks to see if the space below and to the left is free
       y += 1
       x -= 1
-    elsif @matrix[y + 1, x + 1] == 0
+    elsif matrix[y + 1, x + 1] == 0
       # Checks to see if the space below and to the right is free
       y += 1
       x += 1
+    elsif x == 500 && y == 0
+      can_move = false
     else
       can_move = false
     end
   end
 
-  @matrix[y, x] = 2
+  matrix[y, x] = 2
 end
 
 @starting_point = [500, 000]
 
-# Create a method that "drops" a sand into the map starting at [500, 000]
-# Will try to move a sand down (a.k.a. increase y by 1)
-# If the position is taken, it will try to increase y by 1 and decrease x by 1
-# If the position is taken, it will try to increase y by 1 and increase x by 1
-# If the position is taken, it will end the go and store the value of 2 in that position
-# We know that if the sand falls to a column greater than col_max(561) or less than col_min (469) then it falls to the abyss
 
+
+
+################# Part 1 #################
 counter = 0
 
 # Checks that there has been no overflow into the abyss
 # If not, drops a sand
 while @matrix.row(162).zero?
-  drop_sand
+  drop_sand(@matrix)
   counter += 1
 end
 
 # Must subtract one as the final sand drops into the abyss
-p counter - 1
+total = counter - 1
+
+# Part 1: Infinite Abyss
+# Answer: 873
+p total
+
+
+################# Part 2 #################
+counter = 0
+
+# Checks that there is still space to drop a sand
+# If not, drops a sand
+while @ultra_matrix.row(0)[500] == 0
+  drop_sand(@ultra_matrix)
+  counter += 1
+end
+
+total = counter
+
+# Part 2: Finite Floor
+# Answer: 24813
+p total
