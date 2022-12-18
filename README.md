@@ -12,7 +12,7 @@
 <p>Day 11: Monkey In The Middle ✅</p>
 <p>Day 12: Hill Climbing Algorithm ☑️</p>
 <p>Day 13: Distress Signal ✅</p>
-<p>Day 14:</p>
+<p>Day 14:Regolith Resevoir ✅</p>
 <p>Day 15:</p>
 <p>Day 16:</p>
 <p>Day 17:</p>
