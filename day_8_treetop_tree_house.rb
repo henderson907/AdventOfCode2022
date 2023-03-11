@@ -220,6 +220,7 @@ bool_matrix.each do |row|
   end
 end
 
+# Answer: 1560
 p visible_trees
 
 
@@ -261,5 +262,5 @@ scores = best_trees.map do |tree|
   tallest[tree] * tallest_y[tree]
 end
 
-
+# Answer: 4487184
 p scores.max
