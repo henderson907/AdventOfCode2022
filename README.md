@@ -7,7 +7,7 @@
 <p>Day 6: Tuning Trouble ✅</p>
 <p>Day 7: No Space Left On Device ✅</p>
 <p>Day 8: Tree Top Tree House ✅</p>
-<p>Day 9: Rope Bridge ☑️</p>
+<p>Day 9: Rope Bridge ✅</p>
 <p>Day 10: Cathode-Ray Tube ☑️</p>
 <p>Day 11: Monkey In The Middle ✅</p>
 <p>Day 12: Hill Climbing Algorithm ☑️</p>
