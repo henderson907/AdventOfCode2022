@@ -1,3 +1,5 @@
+# I got some help from a friend for this day as I was struggling to format the logic I needed
+
 puzzle_input = "noop
 noop
 addx 5
@@ -136,90 +138,86 @@ addx 3
 noop
 noop"
 
-def test_equal?(left, right)
-  if left != right
-    print "\n", left, "\n"
-    print right, "\n"
-    print 'FAIL', "\n"
-    false
-  else
-    print 'PASS', "\n"
-    true
-  end
-end
-
-def parse_data(data_string)
+# Splits puzzle input into seperate commands
+def retrieve_instructions(data_string)
   data_string.split("\n")
 end
 
-def run(instructions_A)
-  output_H = Hash.new(0)
+
+def run(individual_instructions)
+  output_shape = Hash.new(0)
   cycle = 1
   x_register = 1
-  output_H[cycle] = x_register
-  instructions_A.each do |instruction|
+  output_shape[cycle] = x_register
+  individual_instructions.each do |instruction|
     if instruction == 'noop'
       cycle += 1
       x_register += 0
-      output_H[cycle] = x_register
+      output_shape[cycle] = x_register
     else # default to instruction addx
-      # print instruction.split ' '
       cycle += 1
-      output_H[cycle] = x_register
+      output_shape[cycle] = x_register
       cycle += 1
       _, v = instruction.split ' '
       x_register += v.to_i
-      output_H[cycle] = x_register
+      output_shape[cycle] = x_register
     end
   end
-  output_H
+  output_shape
 end
 
-def scanlines(output_H)
-  output_H.each do |pixel, value|
+# Prints the shape created by the code
+def scanlines(output_shape)
+  output_shape.each do |position, value|
     print value
-    print "\n" if pixel % 40 == 0
+    print "\n" if position % 40 == 0
   end
 end
 
-def part1(data_string)
-  instructions_A = parse_data(data_string)
-  output_H = run(instructions_A)
-  # print output_H, "\n"
-  output_H.filter do |cycle, _v|
+# Code for part 1
+def part1(puzzle_input)
+  individual_instructions = retrieve_instructions(puzzle_input)
+  # Passes the instructions to the run function
+  output_shape = run(individual_instructions)
+
+  output_shape.filter do |cycle, v|
     (cycle - 20) % 40 == 0
   end
           .map { |cycle, v| cycle * v }
           .sum
 end
 
-def part2(data_string)
-  instructions_A = parse_data(data_string)
-  output_H = run(instructions_A)
-  # print output_H, "\n"
-  image_H = Hash.new(' ')
-  output_H.each do |pixel, sprite_pos|
-    image_H[pixel] = case pixel % 40
-                     when sprite_pos
+# Code for part 2
+def part2(puzzle_input)
+  individual_instructions = retrieve_instructions(puzzle_input)
+  output_shape = run(individual_instructions)
+
+  # Creates a new hash to store our final image and then inputs data into it after evaluating
+  # whether or not the value held in the output shape hash is divisible by 40 (after adding 0, 1 or 2)
+  final_image = Hash.new(' ')
+  output_shape.each do |position, value|
+    final_image[position] = case position % 40
+                     when value
                        '#'
-                     when sprite_pos + 1
+                     when value + 1
                        '#'
-                     when sprite_pos + 2
+                     when value + 2
                        '#'
                      else
                        ' '
                      end
   end
-  # print image_H
-  print "\n"
-  scanlines(image_H)
+
+  scanlines(final_image)
 end
 
 
 
 # ------
 
-
+# Answer: 13220
 p part1(puzzle_input)
 
-p part2(puzzle_input)
+# Answer: RUAKHBEK
+print "\n"
+part2(puzzle_input)
