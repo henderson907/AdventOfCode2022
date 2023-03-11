@@ -106,6 +106,15 @@ start_x = 0
   step(start_x, start_y, map, 0, visited)
   puts visited["#{end_x}:#{end_y}"]
 
+
+  ######################## DISCLAIMER! ########################
+  #   I couldn't get my code to work for this challenge so    #
+  #   instead I sat down with a pen and paper and worked it   #
+  #   out by hand. I will come back to this at some point     #
+  #   when I have the time and energy. The main thing is I    #
+  #   managed to get the answer                               #
+  #############################################################
+
   # Part 1: Designated starting point
   # Answer: 352
 

@@ -10,7 +10,7 @@
 <p>Day 9: Rope Bridge ✅</p>
 <p>Day 10: Cathode-Ray Tube ✅</p>
 <p>Day 11: Monkey In The Middle ✅</p>
-<p>Day 12: Hill Climbing Algorithm ☑️</p>
+<p>Day 12: Hill Climbing Algorithm ✅</p>
 <p>Day 13: Distress Signal ✅</p>
 <p>Day 14: Regolith Resevoir ✅</p>
 <p>Day 15:</p>
