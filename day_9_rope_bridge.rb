@@ -2001,11 +2001,13 @@ D 13"
 
 require 'matrix'
 
+# Creates a matrix to ease computing solution by making it a better format
 input = puzzle_input.split("\n").map { |l|
   dir, mag = l.split
   [dir, mag.to_i]
 }
 
+# Sets the direction 'steps'
 DIRS = {
   "U" => Vector[0, -1],
   "D" => Vector[0, 1],
@@ -2013,12 +2015,13 @@ DIRS = {
   "L" => Vector[-1, 0],
 }
 
+# Runs a simulated version of the problem using a placeholder arguement of length = 2 (for part 1)
 def simulate(steps, length=2)
   raise unless length >= 2
-  tail_positions = Hash.new
+  last_knot_places = Hash.new
 
   knots = Array.new(length) { Vector[0, 0] }
-  tail_positions[knots.last] = true
+  last_knot_places[knots.last] = true
 
   steps.each { |dir, mag|
     mag.times {
@@ -2036,11 +2039,11 @@ def simulate(steps, length=2)
         end
       }
 
-      tail_positions[knots.last] = true
+      last_knot_places[knots.last] = true
     }
   }
 
-  return tail_positions.values.count(true)
+  return last_knot_places.values.count(true)
 end
 
 # Part 1: 2 knots
